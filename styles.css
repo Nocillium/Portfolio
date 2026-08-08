@@ -876,6 +876,16 @@ section {
   padding: 14px 16px;
 }
 
+.form-field select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(114, 210, 255, 0.24);
+}
+
+.form-field select option {
+  background: #0a0f1c;
+  color: var(--text);
+}
+
 .form-field input:focus,
 .form-field textarea:focus,
 .form-field select:focus {
