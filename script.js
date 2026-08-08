@@ -354,13 +354,19 @@ window.addEventListener('load', () => {
 });
 
 if (contactForm) {
-  // Initialize EmailJS
-  emailjs.init('dm4DGyfOoEU-rnCkV');
-  console.log('EmailJS initialized');
+  console.log('Contact form found:', contactForm);
+  
+  // Initialize EmailJS with error handling
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init('dm4DGyfOoEU-rnCkV');
+    console.log('EmailJS initialized successfully');
+  } else {
+    console.error('EmailJS library not loaded!');
+  }
 
   contactForm.addEventListener('submit', async (event) => {
+    console.log('Form submit event fired');
     event.preventDefault();
-    console.log('Form submitted');
     
     const fields = Array.from(contactForm.querySelectorAll('[required]'));
     let valid = true;
@@ -381,30 +387,36 @@ if (contactForm) {
     const feedback = contactForm.querySelector('.form-feedback');
     
     if (valid) {
-      console.log('Form validation passed, sending email...');
-      // Disable button and show sending status
+      console.log('Form validation passed, attempting to send email...');
       const submitBtn = contactForm.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
 
       try {
-        // Send email via EmailJS
-        console.log('Sending form with Service ID: service_q1e9g8w, Template ID: template_pnmkq3m');
-        const response = await emailjs.sendForm('service_q1e9g8w', 'template_pnmkq3m', contactForm);
+        if (typeof emailjs === 'undefined') {
+          throw new Error('EmailJS not initialized');
+        }
+        
+        console.log('Sending with:', {
+          serviceId: 'service_q1e9g8w',
+          templateId: 'template_pnmkq3m',
+          formId: 'contactForm'
+        });
+        
+        const response = await emailjs.sendForm('service_q1e9g8w', 'template_pnmkq3m', 'contactForm');
         console.log('Email sent successfully:', response);
         
         feedback.textContent = 'Thank you — your message has been sent successfully!';
         feedback.style.color = 'var(--accent)';
         contactForm.reset();
         
-        // Reset button after 2 seconds
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
         }, 2000);
       } catch (error) {
-        console.error('EmailJS error:', error);
+        console.error('EmailJS error details:', error);
         feedback.textContent = 'Error sending message. Please try again or contact directly.';
         feedback.style.color = '#ff6b6b';
         submitBtn.disabled = false;
