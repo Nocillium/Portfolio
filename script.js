@@ -312,20 +312,46 @@ const projectGalleryObserver = new MutationObserver(() => {
 });
 projectGalleryObserver.observe(projectModalInner, { childList: true, subtree: true });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  },
-  {
-    threshold: 0.15,
-  }
-);
+function revealAllSections() {
+  revealElements.forEach((element) => element.classList.add('visible'));
+}
 
-revealElements.forEach((element) => observer.observe(element));
+function initRevealObserver() {
+  if (!('IntersectionObserver' in window)) {
+    revealAllSections();
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    {
+      threshold: 0.15,
+    }
+  );
+
+  revealElements.forEach((element) => observer.observe(element));
+
+  setTimeout(() => {
+    if ([...revealElements].some((element) => !element.classList.contains('visible'))) {
+      revealAllSections();
+    }
+  }, 1500);
+}
+
+window.addEventListener('load', () => {
+  initRevealObserver();
+  setTimeout(() => {
+    if ([...revealElements].some((element) => !element.classList.contains('visible'))) {
+      revealAllSections();
+    }
+  }, 2500);
+});
 
 if (contactForm) {
   contactForm.addEventListener('submit', (event) => {
