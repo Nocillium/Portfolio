@@ -1,0 +1,20 @@
+{
+  "buildCommand": "echo 'Static site - no build needed'",
+  "outputDirectory": ".",
+  "public": true,
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "EMAILJS_PUBLIC_KEY": "@emailjs_public_key",
+    "EMAILJS_SERVICE_ID": "@emailjs_service_id",
+    "EMAILJS_TEMPLATE_ID": "@emailjs_template_id"
+  }
+}
