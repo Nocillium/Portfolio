@@ -354,7 +354,10 @@ window.addEventListener('load', () => {
 });
 
 if (contactForm) {
-  contactForm.addEventListener('submit', (event) => {
+  // Initialize EmailJS with credentials from config.js
+  emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+
+  contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const fields = Array.from(contactForm.querySelectorAll('[required]'));
     let valid = true;
@@ -373,11 +376,35 @@ if (contactForm) {
     });
 
     const feedback = contactForm.querySelector('.form-feedback');
+    
     if (valid) {
-      feedback.textContent = 'Thank you — your request is ready to send. I will review this and reply soon.';
-      contactForm.reset();
+      // Disable submit button during sending
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        // Send email using EmailJS
+        await emailjs.sendForm(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, contactForm);
+        
+        feedback.textContent = 'Thank you — your message has been sent successfully!';
+        feedback.style.color = 'var(--accent)';
+        contactForm.reset();
+        
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      } catch (error) {
+        feedback.textContent = 'Error sending message. Please try again or contact directly.';
+        feedback.style.color = '#ff6b6b';
+        console.error('EmailJS error:', error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
     } else {
       feedback.textContent = 'Please correct the highlighted fields and try again.';
+      feedback.style.color = '#ff6b6b';
     }
   });
 }
