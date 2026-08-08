@@ -538,20 +538,7 @@
       </footer>
     </div>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/index.min.js" async></script>
-    <script>
-      // Wait for EmailJS to be available, then load the main script
-      function loadMainScript() {
-        if (typeof emailjs !== 'undefined') {
-          console.log('EmailJS loaded, loading main script...');
-          const script = document.createElement('script');
-          script.src = 'script.js';
-          document.body.appendChild(script);
-        } else {
-          setTimeout(loadMainScript, 50);
-        }
-      }
-      loadMainScript();
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/index.min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

@@ -352,21 +352,29 @@ window.addEventListener('load', () => {
   }, 2500);
 });
 
-// Wait for EmailJS to load before initializing
-function initializeEmailJS() {
-  if (typeof emailjs === 'undefined') {
-    console.log('EmailJS not loaded yet, waiting...');
-    setTimeout(initializeEmailJS, 100);
+// Wait for EmailJS to load
+async function waitForEmailJS() {
+  let attempts = 0;
+  while (typeof emailjs === 'undefined' && attempts < 100) {
+    await new Promise(resolve => setTimeout(resolve, 50));
+    attempts++;
+  }
+  return typeof emailjs !== 'undefined';
+}
+
+async function setupContactForm() {
+  // Wait for EmailJS to load
+  const emailjsLoaded = await waitForEmailJS();
+  
+  if (!emailjsLoaded) {
+    console.error('EmailJS failed to load');
     return;
   }
 
-  console.log('EmailJS library loaded, initializing...');
+  console.log('EmailJS loaded, initializing...');
   emailjs.init('dm4DGyfOoEU-rnCkV');
   console.log('EmailJS initialized successfully');
-  setupContactForm();
-}
-
-function setupContactForm() {
+  
   const contactForm = document.getElementById('contactForm');
   
   if (!contactForm) {
@@ -374,7 +382,7 @@ function setupContactForm() {
     return;
   }
   
-  console.log('Contact form found:', contactForm);
+  console.log('Contact form found');
 
   contactForm.addEventListener('submit', async (event) => {
     console.log('Form submit event fired');
@@ -399,23 +407,13 @@ function setupContactForm() {
     const feedback = contactForm.querySelector('.form-feedback');
     
     if (valid) {
-      console.log('Form validation passed, attempting to send email...');
+      console.log('Form validation passed, sending email...');
       const submitBtn = contactForm.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
 
       try {
-        if (typeof emailjs === 'undefined') {
-          throw new Error('EmailJS not available');
-        }
-        
-        console.log('Sending with:', {
-          serviceId: 'service_q1e9g8w',
-          templateId: 'template_pnmkq3m',
-          formId: 'contactForm'
-        });
-        
         const response = await emailjs.sendForm('service_q1e9g8w', 'template_pnmkq3m', 'contactForm');
         console.log('Email sent successfully:', response);
         
@@ -428,7 +426,7 @@ function setupContactForm() {
           submitBtn.textContent = originalText;
         }, 2000);
       } catch (error) {
-        console.error('EmailJS error details:', error);
+        console.error('EmailJS error:', error);
         feedback.textContent = 'Error sending message. Please try again or contact directly.';
         feedback.style.color = '#ff6b6b';
         submitBtn.disabled = false;
@@ -442,9 +440,9 @@ function setupContactForm() {
   });
 }
 
-// Initialize when DOM is ready
+// Initialize contact form when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeEmailJS);
+  document.addEventListener('DOMContentLoaded', setupContactForm);
 } else {
-  initializeEmailJS();
+  setupContactForm();
 }
