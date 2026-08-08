@@ -181,6 +181,35 @@ const projectData = {
     architecture: 'Incident → AI Triage → Jira Issue → Tracking → Notification → Resolution',
     gallery: ['assets/n8n_project2.jpg'],
   },
+  'project-powerbi-dashboards': {
+    title: 'Power BI Business Intelligence Dashboards',
+    category: 'Business Intelligence • Data Analytics',
+    tools: 'Microsoft Power BI, DAX, Power Query, Data Modeling, Data Transformation, KPI Development, Excel Data Integration',
+    overview: 'A collection of Power BI business intelligence dashboards designed to transform operational and business data into interactive, decision-ready reports. The dashboards provide visibility into sales performance, churn and retention, repossessions, collections, account status, sales goals, productivity, billed hours, invoice performance, and operational KPIs.',
+    howItWorks: 'Sales Churn Dashboard: Monitors 90-day sales, repossessed and retained accounts, retention and repossession rates, location-level performance, average down payment, average days held, deferred payments, and principal received across locations including Campbellsville and Bowling Green. Collections Dashboard: Tracks total accounts, current and late accounts, promise-to-pay, repossession-in-process, overdue accounts, write-off metrics, and payment schedules to help collection teams prioritize action. Sales Performance Dashboard: Measures monthly sales goals, units sold, units remaining, down payment metrics, DCC and iStash performance, retail sales, and gross revenue across Retail, Bowling Green, Campbellsville, and DR45 locations. ReGo / Productivity Dashboard: Monitors invoice performance, billed hours for current and previous weeks, and individual technician productivity using KPI gauges and a detailed performance table.',
+    features: [
+      'Interactive Business Dashboards',
+      'KPI Tracking',
+      'DAX Measures',
+      'Data Modeling',
+      'Power Query',
+      'Sales Analytics',
+      'Collections Analytics',
+      'Productivity Analytics',
+      'Retention & Churn Analysis',
+      'Operational Reporting',
+      'Location-Level Analysis',
+      'Automated Data Refresh',
+    ],
+    businessValue: 'Transforms raw operational and business data into actionable dashboards that allow management to monitor performance, identify issues, track KPIs, and make data-driven decisions. Delivers faster access to business insights, centralized reporting, easier KPI monitoring, improved operational visibility, data-driven decision making, and reduced dependence on manually prepared reports.',
+    architecture: 'Data Sources → Power Query → Data Model → DAX Calculations → Power BI Dashboards → Business Insights',
+    galleryItems: [
+      { src: 'assets/powerbi_1.png', caption: 'Sales Churn Dashboard' },
+      { src: 'assets/powerbi_2.png', caption: 'Collections Dashboard' },
+      { src: 'assets/powerbi_3.png', caption: 'Sales Performance Dashboard' },
+      { src: 'assets/powerbi_4.png', caption: 'ReGo / Productivity Dashboard' },
+    ],
+  },
   'project-ai-lead-response-sales-automation': {
     title: 'AI Lead Response & Sales Automation',
     category: 'Sales Automation • AI Agents',
@@ -253,7 +282,10 @@ function openProjectModal(projectKey) {
         <p>${project.businessValue}</p>
       </div>
       <div class="project-gallery">
-        ${project.gallery.map((src) => `<img src="${src}" alt="${project.title} screenshot" data-src="${src}" />`).join('')}
+        ${(project.galleryItems
+          ? project.galleryItems.map(({src, caption}) => `<figure class="project-gallery-item"><img src="${src}" alt="${caption}" data-src="${src}" /><figcaption>${caption}</figcaption></figure>`)
+          : project.gallery.map((src) => `<img src="${src}" alt="${project.title} screenshot" data-src="${src}" />`))
+          .join('')}
       </div>
     </div>
   `;
