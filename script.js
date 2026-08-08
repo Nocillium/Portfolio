@@ -353,41 +353,11 @@ window.addEventListener('load', () => {
 });
 
 // Wait for EmailJS to load
-async function waitForEmailJS() {
-  let attempts = 0;
-  while (typeof emailjs === 'undefined' && attempts < 100) {
-    await new Promise(resolve => setTimeout(resolve, 50));
-    attempts++;
-  }
-  return typeof emailjs !== 'undefined';
-}
+// Simple form validation for Formspree
+const contactForm = document.getElementById('contactForm');
 
-async function setupContactForm() {
-  // Wait for EmailJS to load
-  const emailjsLoaded = await waitForEmailJS();
-  
-  if (!emailjsLoaded) {
-    console.error('EmailJS failed to load');
-    return;
-  }
-
-  console.log('EmailJS loaded, initializing...');
-  emailjs.init('dm4DGyfOoEU-rnCkV');
-  console.log('EmailJS initialized successfully');
-  
-  const contactForm = document.getElementById('contactForm');
-  
-  if (!contactForm) {
-    console.log('Contact form not found');
-    return;
-  }
-  
-  console.log('Contact form found');
-
-  contactForm.addEventListener('submit', async (event) => {
-    console.log('Form submit event fired');
-    event.preventDefault();
-    
+if (contactForm) {
+  contactForm.addEventListener('submit', (event) => {
     const fields = Array.from(contactForm.querySelectorAll('[required]'));
     let valid = true;
 
@@ -404,45 +374,8 @@ async function setupContactForm() {
       }
     });
 
-    const feedback = contactForm.querySelector('.form-feedback');
-    
-    if (valid) {
-      console.log('Form validation passed, sending email...');
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-
-      try {
-        const response = await emailjs.sendForm('service_q1e9g8w', 'template_pnmkq3m', 'contactForm');
-        console.log('Email sent successfully:', response);
-        
-        feedback.textContent = 'Thank you — your message has been sent successfully!';
-        feedback.style.color = 'var(--accent)';
-        contactForm.reset();
-        
-        setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }, 2000);
-      } catch (error) {
-        console.error('EmailJS error:', error);
-        feedback.textContent = 'Error sending message. Please try again or contact directly.';
-        feedback.style.color = '#ff6b6b';
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-      }
-    } else {
-      console.log('Form validation failed');
-      feedback.textContent = 'Please correct the highlighted fields and try again.';
-      feedback.style.color = '#ff6b6b';
+    if (!valid) {
+      event.preventDefault();
     }
   });
-}
-
-// Initialize contact form when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', setupContactForm);
-} else {
-  setupContactForm();
 }
