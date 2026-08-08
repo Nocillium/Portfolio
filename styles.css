@@ -832,18 +832,26 @@ section {
 }
 
 .contact-info {
-  display: grid;
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
   min-height: max-content;
 }
 
+.contact-info > div:first-child {
+  margin-bottom: 8px;
+}
+
 .contact-line {
-  display: grid;
-  gap: 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
 }
 
 .contact-line strong {
   color: var(--accent);
+  min-width: 70px;
+  flex-shrink: 0;
 }
 
 .contact-line a {
