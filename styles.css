@@ -269,7 +269,7 @@ section {
 .hero-card {
   position: relative;
   min-height: 420px;
-  padding: 24px;
+  padding: 32px;
 }
 
 .visual-header {
@@ -338,19 +338,19 @@ section {
 .flow-lines::after {
   content: '';
   position: absolute;
-  border-top: 1px dashed rgba(114, 210, 255, 0.22);
+  border-top: 1px dashed rgba(114, 210, 255, 0.12);
 }
 
 .flow-lines::before {
   left: 10%;
   right: 10%;
-  top: 45%;
+  top: 35%;
 }
 
 .flow-lines::after {
   left: 10%;
   right: 10%;
-  top: 55%;
+  top: 68%;
 }
 
 .glass-card {
