@@ -3,7 +3,6 @@ const navMenu = document.querySelector('.site-nav');
 const techItems = document.querySelectorAll('.tech-item');
 const stackDetailText = document.querySelector('.stack-detail-text');
 const revealElements = document.querySelectorAll('.reveal, .reveal-item');
-const contactForm = document.getElementById('contactForm');
 
 function toggleMenu() {
   const expanded = navToggle.getAttribute('aria-expanded') === 'true';
@@ -353,16 +352,29 @@ window.addEventListener('load', () => {
   }, 2500);
 });
 
-if (contactForm) {
-  console.log('Contact form found:', contactForm);
-  
-  // Initialize EmailJS with error handling
-  if (typeof emailjs !== 'undefined') {
-    emailjs.init('dm4DGyfOoEU-rnCkV');
-    console.log('EmailJS initialized successfully');
-  } else {
-    console.error('EmailJS library not loaded!');
+// Wait for EmailJS to load before initializing
+function initializeEmailJS() {
+  if (typeof emailjs === 'undefined') {
+    console.log('EmailJS not loaded yet, waiting...');
+    setTimeout(initializeEmailJS, 100);
+    return;
   }
+
+  console.log('EmailJS library loaded, initializing...');
+  emailjs.init('dm4DGyfOoEU-rnCkV');
+  console.log('EmailJS initialized successfully');
+  setupContactForm();
+}
+
+function setupContactForm() {
+  const contactForm = document.getElementById('contactForm');
+  
+  if (!contactForm) {
+    console.log('Contact form not found');
+    return;
+  }
+  
+  console.log('Contact form found:', contactForm);
 
   contactForm.addEventListener('submit', async (event) => {
     console.log('Form submit event fired');
@@ -395,7 +407,7 @@ if (contactForm) {
 
       try {
         if (typeof emailjs === 'undefined') {
-          throw new Error('EmailJS not initialized');
+          throw new Error('EmailJS not available');
         }
         
         console.log('Sending with:', {
@@ -428,4 +440,11 @@ if (contactForm) {
       feedback.style.color = '#ff6b6b';
     }
   });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeEmailJS);
+} else {
+  initializeEmailJS();
 }
