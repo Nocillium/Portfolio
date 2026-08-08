@@ -356,9 +356,12 @@ window.addEventListener('load', () => {
 if (contactForm) {
   // Initialize EmailJS
   emailjs.init('dm4DGyfOoEU-rnCkV');
+  console.log('EmailJS initialized');
 
   contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    console.log('Form submitted');
+    
     const fields = Array.from(contactForm.querySelectorAll('[required]'));
     let valid = true;
 
@@ -378,6 +381,7 @@ if (contactForm) {
     const feedback = contactForm.querySelector('.form-feedback');
     
     if (valid) {
+      console.log('Form validation passed, sending email...');
       // Disable button and show sending status
       const submitBtn = contactForm.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
@@ -386,7 +390,9 @@ if (contactForm) {
 
       try {
         // Send email via EmailJS
-        await emailjs.sendForm('service_q1e9g8w', 'template_pnmkq3m', contactForm);
+        console.log('Sending form with Service ID: service_q1e9g8w, Template ID: template_pnmkq3m');
+        const response = await emailjs.sendForm('service_q1e9g8w', 'template_pnmkq3m', contactForm);
+        console.log('Email sent successfully:', response);
         
         feedback.textContent = 'Thank you — your message has been sent successfully!';
         feedback.style.color = 'var(--accent)';
@@ -398,13 +404,14 @@ if (contactForm) {
           submitBtn.textContent = originalText;
         }, 2000);
       } catch (error) {
+        console.error('EmailJS error:', error);
         feedback.textContent = 'Error sending message. Please try again or contact directly.';
         feedback.style.color = '#ff6b6b';
-        console.error('EmailJS error:', error);
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
       }
     } else {
+      console.log('Form validation failed');
       feedback.textContent = 'Please correct the highlighted fields and try again.';
       feedback.style.color = '#ff6b6b';
     }
