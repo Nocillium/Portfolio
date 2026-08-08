@@ -294,7 +294,7 @@ section {
 
 .node-map {
   display: grid;
-  gap: 16px;
+  gap: 24px;
   grid-template-columns: repeat(3, minmax(100px, 1fr));
   align-items: center;
   justify-items: center;
@@ -329,28 +329,7 @@ section {
 }
 
 .flow-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.flow-lines::before,
-.flow-lines::after {
-  content: '';
-  position: absolute;
-  border-top: 1px dashed rgba(114, 210, 255, 0.12);
-}
-
-.flow-lines::before {
-  left: 10%;
-  right: 10%;
-  top: 35%;
-}
-
-.flow-lines::after {
-  left: 10%;
-  right: 10%;
-  top: 68%;
+  display: none;
 }
 
 .glass-card {
