@@ -1049,11 +1049,15 @@ section {
   }
 
   .hero-copy,
-  .hero-visual,
   .project-card,
   .project-card-content {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .hero-visual {
+    margin-left: 4px;
+    margin-right: 4px;
   }
 
   .hero-grid {
