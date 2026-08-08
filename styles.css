@@ -39,6 +39,18 @@ svg {
   max-width: 100%;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 button,
 input,
 select,
@@ -925,8 +937,15 @@ section {
 }
 
 @media (max-width: 760px) {
+  .page-shell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
   .site-header {
     flex-wrap: wrap;
+    padding-inline: 12px;
+    gap: 14px;
   }
 
   .mobile-nav-toggle {
@@ -936,14 +955,14 @@ section {
   .site-nav {
     position: absolute;
     top: 88px;
-    right: 24px;
-    left: 24px;
+    right: 12px;
+    left: 12px;
     display: none;
     flex-direction: column;
     background: rgba(5, 8, 16, 0.98);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 24px;
-    padding: 18px;
+    padding: 20px;
     gap: 16px;
     backdrop-filter: blur(18px);
   }
@@ -966,6 +985,108 @@ section {
     min-height: auto;
   }
 
+  .hero-grid,
+  .about-grid,
+  .stack-grid,
+  .process-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .hero-copy,
+  .hero-visual,
+  .project-card,
+  .project-card-content,
+  .project-image,
+  .project-card-top,
+  .project-tools,
+  .project-tag {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .hero-copy,
+  .hero-visual,
+  .project-card,
+  .project-card-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .hero-grid {
+    gap: 24px;
+  }
+
+  .hero-copy h2 {
+    font-size: 2.2rem;
+    line-height: 1.1;
+  }
+
+  .hero-text {
+    margin-bottom: 24px;
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .hero-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .hero-stats .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .visual-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .node-map {
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    min-height: 220px;
+  }
+
+  .node-map .node {
+    min-width: 100%;
+  }
+
+  .project-card-content {
+    padding: 20px;
+  }
+
+  .project-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .project-tag {
+    white-space: normal;
+  }
+
+  .project-tools {
+    font-size: 0.95rem;
+  }
+
+  .project-open {
+    width: 100%;
+  }
+
+  .project-image {
+    aspect-ratio: 16 / 9;
+  }
+
   .contact-grid {
     gap: 20px;
   }
@@ -973,7 +1094,36 @@ section {
 
 @media (max-width: 550px) {
   .hero-copy h2 {
-    font-size: 2.4rem;
+    font-size: 2.1rem;
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .project-card-content {
+    padding: 18px;
+  }
+
+  .project-card-top {
+    gap: 12px;
+  }
+
+  .project-tag {
+    white-space: normal;
+  }
+
+  .project-tools {
+    font-size: 0.92rem;
   }
 
   .process-step,
