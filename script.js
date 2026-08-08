@@ -69,7 +69,7 @@ const projectData = {
     ],
     businessValue: 'Automates appointment scheduling through AI voice conversations, reducing manual coordination and improving responsiveness.',
     architecture: 'Customer → AI Voice Agent → Appointment Request → Webhook → Make → Calendar Availability Check → Confirmation / Alternative Time',
-    gallery: ['assets/bland_project2.png'],
+    gallery: ['assets/bland_proj2.png'],
   },
   'project-ai-rental-voice-agent': {
     title: 'AI Rental Management Voice Agent',

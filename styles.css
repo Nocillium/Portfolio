@@ -162,16 +162,19 @@ section {
   width: 44px;
   height: 44px;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile-nav-toggle span {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
   height: 2px;
-  width: 20px;
   background: var(--text);
   border-radius: 999px;
-  left: 12px;
 }
 
 .mobile-nav-toggle span:nth-child(1) {
@@ -972,8 +975,17 @@ section {
   }
 
   .site-nav a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     padding: 12px 0;
     width: 100%;
+  }
+
+  .nav-cta {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   .projects-grid,
