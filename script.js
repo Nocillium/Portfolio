@@ -343,6 +343,10 @@ const projectGalleryObserver = new MutationObserver(() => {
 });
 projectGalleryObserver.observe(projectModalInner, { childList: true, subtree: true });
 
+document.querySelectorAll('.cert-image-card img').forEach((image) => {
+  image.addEventListener('click', () => openLightbox(image.src, image.alt));
+});
+
 function revealAllSections() {
   revealElements.forEach((element) => element.classList.add('visible'));
 }

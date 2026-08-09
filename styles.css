@@ -803,6 +803,7 @@ section {
   height: 100%;
   object-fit: contain;
   border-radius: 14px;
+  cursor: pointer;
 }
 
 .cert-card,
