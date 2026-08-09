@@ -179,7 +179,7 @@ const projectData = {
     ],
     businessValue: 'Reduces manual incident handling by connecting AI triage, ticket creation, tracking, and communication into one automated workflow.',
     architecture: 'Incident → AI Triage → Jira Issue → Tracking → Notification → Resolution',
-    gallery: ['assets/n8n_project2.jpg'],
+    gallery: ['assets/n8n_project2.png'],
   },
   'project-powerbi-dashboards': {
     title: 'Power BI Business Intelligence Dashboards',
