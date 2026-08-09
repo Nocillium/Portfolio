@@ -790,6 +790,12 @@ section {
   gap: 18px;
 }
 
+@media (max-width: 760px) {
+  .cert-images {
+    grid-template-columns: 1fr;
+  }
+}
+
 .cert-image-card {
   padding: 14px;
   display: flex;
