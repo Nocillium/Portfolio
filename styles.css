@@ -781,7 +781,13 @@ section {
 
 .cert-grid {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+.cert-group {
+  display: grid;
+  gap: 18px;
 }
 
 .cert-images {
@@ -792,6 +798,9 @@ section {
 
 @media (max-width: 760px) {
   .cert-images {
+    grid-template-columns: 1fr;
+  }
+  .cert-grid {
     grid-template-columns: 1fr;
   }
 }
